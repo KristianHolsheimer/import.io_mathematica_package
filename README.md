@@ -35,7 +35,7 @@ At this stage, this package only contains the function `IOCrawler[assoc]`, which
 - `"APIKey"` - your personal import.io API key
 - `"URL"` - the URL you wish to crawl
 
-All of the associated `Values` should be given as strings. For example, I created a custom API in import.io that scrapes pages like `"http://hisz.rsoe.hu/alertmap/site/index.php?pageid=seism_index&rid=431172"` for earthquake data. The call to the `IOCrawler[]` function looks like:
+All of the associated `Values` should be given as strings. For example, I created a custom API in import.io that scrapes pages such as http://hisz.rsoe.hu/alertmap/site/index.php?pageid=seism_index&rid=431172 for earthquake data. The call to the `IOCrawler[]` function looks like:
 
     call =
       <|
