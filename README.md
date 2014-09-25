@@ -17,7 +17,7 @@ The package is loaded into Mathematica in the usual way:
 
 
 
-## *Alternatively:* How to load package without installing:
+##### *Alternatively:* How to load package without installing:
 
 Download (or clone) the `ImportIO.m` file and move it to the folder where your main notebook is located. The package can then be loaded by evaluating the following command within Mathematica:
 
@@ -26,7 +26,7 @@ Download (or clone) the `ImportIO.m` file and move it to the folder where your m
 
 
 
-## Usage:
+## How to use:
 
 At this stage, this package only contains the function `IOCrawler[assoc]`, which calls a custom crawler. As input it takes an *Association* object that must contain the following *Keys*:
 
