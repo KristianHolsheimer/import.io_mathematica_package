@@ -28,14 +28,14 @@ Download (or clone) the `ImportIO.m` file and move it to the folder where your m
 
 ## How to use:
 
-At this stage, this package only contains the function `IOCrawler[assoc]`, which calls a custom crawler. As input it takes an *Association* object that must contain the following *Keys*:
+At this stage, this package only contains the function `IOCrawler[assoc]`, which calls a custom crawler. As input it takes an `Association` object that must contain the following `Keys`:
 
 - `"ID"` - the ID of the import.io API
 - `"User"` - your import.io user ID
 - `"APIKey"` - your personal import.io API key
 - `"URL"` - the URL you wish to crawl
 
-All of the associated *Values* should be given as strings. For example, I created a custom API in import.io that scrapes pages like `"http://hisz.rsoe.hu/alertmap/site/index.php?pageid=seism_index&rid=431172"` for earthquake data. The call to the `IOCrawler[]` function looks like:
+All of the associated `Values` should be given as strings. For example, I created a custom API in import.io that scrapes pages like `"http://hisz.rsoe.hu/alertmap/site/index.php?pageid=seism_index&rid=431172"` for earthquake data. The call to the `IOCrawler[]` function looks like:
 
     call =
       <|
@@ -47,7 +47,7 @@ All of the associated *Values* should be given as strings. For example, I create
       
     IOCrawler[ call ]
 
-
+This returns an `Association` object that can be used directly as a row in a `Dataset`.
 
 
 ## To do:
