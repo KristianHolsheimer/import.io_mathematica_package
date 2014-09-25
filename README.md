@@ -1,6 +1,6 @@
 # *ImportIO* Mathematica package
 
-This is a Mathematica package that allows you to call import.io custom webscraping APIs directly within Mathematica.
+This is a Mathematica package that allows you to call [import.io](http://import.io) custom webscraping APIs directly within Mathematica.
 
 
 ## How to install:
