@@ -77,9 +77,6 @@ response=ImportString[URLFetch[api,"Method"->"POST","BodyData"->request],"JSON"]
 output=Null;
 
 
-(* test whether the request came back correctly: *)
-If[KeyExistsQ[response,"results"],output=response];
-
 
 (* test whether the request came back with an error: *)
 If[KeyExistsQ[response,"error"]
