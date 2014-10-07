@@ -1,0 +1,279 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     10831,        270]
+NotebookOptionsPosition[     10230,        248]
+NotebookOutlinePosition[     10892,        271]
+CellTagsIndexPosition[     10849,        268]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"Title", ":", " ", "ImportIO"}], " ", "*)"}], " ", "\n", 
+  RowBox[{"(*", " ", 
+   RowBox[{"Author", ":", " ", 
+    RowBox[{"Kristian", " ", "Holsheimer"}]}], " ", "*)"}], "\n", 
+  RowBox[{"(*", " ", 
+   RowBox[{"Summary", ":", " ", 
+    RowBox[{"Summary", " ", "goes", " ", 
+     RowBox[{"here", "."}]}]}], " ", "*)"}], "\n", 
+  RowBox[{"(*", " ", 
+   RowBox[{"Context", ":", " ", "ImportIO`IOCrawler`"}], " ", "*)"}], "\n", 
+  RowBox[{"(*", " ", 
+   RowBox[{"Package", " ", 
+    RowBox[{"version", ":", " ", "1.0"}]}], " ", "*)"}], "\n", 
+  RowBox[{"(*", " ", 
+   RowBox[{"History", ":", "  ", 
+    RowBox[{
+    "Version", " ", "1.0", " ", "September", " ", "24", " ", "2014"}]}], " ", 
+   "*)"}], "\n", 
+  RowBox[{"(*", " ", 
+   RowBox[{"Mathematica", " ", 
+    RowBox[{"version", ":", " ", 
+     RowBox[{"10.0", " ", "for", " ", "Linux", " ", "x86", " ", 
+      RowBox[{"(", 
+       RowBox[{"64", "-", "bit"}], ")"}], " ", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"June", " ", "29"}], ",", " ", "2014"}], ")"}]}]}]}], " ", 
+   "*)"}], "\n", 
+  RowBox[{"(*", " ", 
+   RowBox[{"Discussion", ":", " ", 
+    RowBox[{"Give", " ", "more", " ", "details", " ", 
+     RowBox[{"here", "."}]}]}], "*)"}]}]], "Code",
+ CellChangeTimes->{{3.620581455027596*^9, 3.6205814612300262`*^9}, {
+  3.620582524459956*^9, 3.620582551539441*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"BeginPackage", "[", "\"\<ImportIO`\>\"", "]"}], ";"}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{"initialize", ":"}], " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Unprotect", "[", "IOCrawler", "]"}], ";"}], "\[IndentingNewLine]", 
+
+ RowBox[{
+  RowBox[{
+   RowBox[{"ClearAll", "[", "IOCrawler", "]"}], ";"}], "\[IndentingNewLine]", 
+  "\n", "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{"messages", ":"}], " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"IOCrawler", "::", "usage"}], "=", 
+   "\"\<ImportIO[call] calls an import.io API and returns the results in the \
+form of an Association.\>\""}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"IOCrawler", "::", "badkeys"}], "=", "\[IndentingNewLine]", 
+   "\"\<The input call must be an Association object containing the following \
+Keys: \\\"Type\\\", \\\"ID\\\", \\\"User\\\", \\\"APIKey\\\", \
+\\\"URL\\\".\>\""}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"IOCrawler", "::", "httperror"}], "=", "\[IndentingNewLine]", 
+    "\"\<An error has occured: \\\"`1`\\\"\>\""}], ";"}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{"syntax", " ", 
+    RowBox[{"highlighting", ":"}]}], " ", "*)"}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"SyntaxInformation", "[", "ImportIO", "]"}], "=", 
+    RowBox[{"{", 
+     RowBox[{"\"\<ArgumentsPattern\>\"", "\[Rule]", 
+      RowBox[{"{", "_", "}"}]}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", "\n", "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{"start", " ", "actual", " ", 
+    RowBox[{"code", ":"}]}], " ", "*)"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Begin", "[", "\"\<`Private`\>\"", "]"}], ";"}], 
+  "\[IndentingNewLine]"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"IOCrawler", "[", "call_Association", "]"}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "api", ",", "keys", ",", "request", ",", "response", ",", "output"}], 
+       "}"}], ",", "\n", "\[IndentingNewLine]", 
+      RowBox[{"(*", " ", 
+       RowBox[{
+        RowBox[{
+        "check", " ", "if", " ", "the", " ", "necessary", " ", "Keys", " ", 
+         "are", " ", "supplied", " ", 
+         RowBox[{"(", 
+          RowBox[{"Abort", " ", "otherwise"}], ")"}]}], ":"}], " ", "*)"}], 
+      "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"keys", "=", 
+        RowBox[{"{", 
+         RowBox[{
+         "\"\<ID\>\"", ",", "\"\<User\>\"", ",", "\"\<APIKey\>\"", ",", 
+          "\"\<URL\>\""}], "}"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"Not", "[", 
+          RowBox[{"SubsetQ", "[", 
+           RowBox[{
+            RowBox[{"Keys", "[", "call", "]"}], ",", "keys"}], "]"}], "]"}], 
+         ",", 
+         RowBox[{
+          RowBox[{"Message", "[", 
+           RowBox[{"IOCrawler", "::", "badkeys"}], "]"}], ";", 
+          RowBox[{"Abort", "[", "]"}]}]}], "]"}], ";", "\[IndentingNewLine]", 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"(*", " ", 
+        RowBox[{"the", " ", "full", " ", "API", " ", 
+         RowBox[{"URL", ":"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"api", "=", 
+        RowBox[{"\"\<https://api.import.io/store/connector/\>\"", "<>", 
+         RowBox[{"call", "[", "\"\<ID\>\"", "]"}], "<>", 
+         "\"\</_query?_user=\>\"", "<>", 
+         RowBox[{"call", "[", "\"\<User\>\"", "]"}], "<>", 
+         "\"\<&_apikey=\>\"", "<>", 
+         RowBox[{"call", "[", "\"\<APIKey\>\"", "]"}]}]}], ";", 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"(*", " ", 
+        RowBox[{
+        "the", " ", "request", " ", "containing", " ", "the", " ", "URL", " ",
+          "to", " ", "be", " ", 
+         RowBox[{"scraped", ":"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"request", "=", 
+        RowBox[{"\"\<{\\\"input\\\":{\\\"webpage/url\\\":\\\"\>\"", "<>", 
+         RowBox[{"call", "[", "\"\<URL\>\"", "]"}], "<>", 
+         "\"\<\\\"}}\>\""}]}], ";", "\[IndentingNewLine]", 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"(*", " ", 
+        RowBox[{"do", " ", "the", " ", 
+         RowBox[{"crawling", ":"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"response", "=", 
+        RowBox[{
+         RowBox[{"ImportString", "[", 
+          RowBox[{
+           RowBox[{"URLFetch", "[", 
+            RowBox[{"api", ",", 
+             RowBox[{"\"\<Method\>\"", "\[Rule]", "\"\<POST\>\""}], ",", 
+             RowBox[{"\"\<BodyData\>\"", "\[Rule]", "request"}]}], "]"}], 
+           ",", "\"\<JSON\>\""}], "]"}], "//", "Association"}]}], ";", 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"(*", " ", 
+        RowBox[{"initialize", " ", 
+         RowBox[{"output", ":"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"output", "=", "Null"}], ";", "\[IndentingNewLine]", 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"(*", " ", 
+        RowBox[{
+        "test", " ", "whether", " ", "the", " ", "request", " ", "came", " ", 
+         "back", " ", "with", " ", "an", " ", 
+         RowBox[{"error", ":"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"KeyExistsQ", "[", 
+          RowBox[{"response", ",", "\"\<error\>\""}], "]"}], 
+         "\[IndentingNewLine]", ",", 
+         RowBox[{"Message", "[", 
+          RowBox[{
+           RowBox[{"IOCrawler", "::", "httperror"}], ",", 
+           RowBox[{"Lookup", "[", 
+            RowBox[{"response", ",", "\"\<error\>\""}], "]"}]}], "]"}]}], 
+        "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"(*", " ", 
+        RowBox[{
+        "test", " ", "whether", " ", "the", " ", "request", " ", "came", " ", 
+         "back", " ", 
+         RowBox[{"correctly", ":"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"KeyExistsQ", "[", 
+          RowBox[{"response", ",", "\"\<results\>\""}], "]"}], 
+         "\[IndentingNewLine]", ",", 
+         RowBox[{"output", "=", 
+          RowBox[{
+           RowBox[{"response", "[", "\"\<results\>\"", "]"}], "//", 
+           "Association"}]}]}], "\[IndentingNewLine]", "]"}], ";", 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"(*", " ", 
+        RowBox[{"the", " ", "resulting", " ", 
+         RowBox[{"output", ":"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+       "output"}]}], "\[IndentingNewLine]", "]"}]}], ";"}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"End", "[", "]"}], ";"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{"protect", " ", "the", " ", "functions", " ", "thus", " ", 
+    RowBox[{"defined", ":"}]}], " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Protect", "[", "IOCrawler", "]"}], ";"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"EndPackage", "[", "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.6205801079794416`*^9, 3.620580341911673*^9}, {
+   3.620580404152895*^9, 3.6205804602647543`*^9}, {3.620580529760009*^9, 
+   3.620580583736671*^9}, {3.620580642425302*^9, 3.620580659846725*^9}, {
+   3.620580698627034*^9, 3.620580922871334*^9}, {3.620580956815618*^9, 
+   3.620580960830019*^9}, {3.6205810157142467`*^9, 3.620581382608827*^9}, 
+   3.62058155313874*^9, {3.620581593794517*^9, 3.620581642370256*^9}, 
+   3.620581745905559*^9, {3.620582157149445*^9, 3.620582157296143*^9}, {
+   3.620582466977847*^9, 3.620582500559596*^9}, {3.620589082414564*^9, 
+   3.6205891017544737`*^9}, {3.6205892369043503`*^9, 3.620589260085919*^9}, {
+   3.620589417882969*^9, 3.6205894228233633`*^9}, {3.621673771202023*^9, 
+   3.621673771874675*^9}}]
+},
+AutoGeneratedPackage->Automatic,
+WindowSize->{896, 848},
+WindowMargins->{{Automatic, 246}, {Automatic, -10}},
+TaggingRules->None,
+FrontEndVersion->"10.0 for Linux x86 (64-bit) (September 9, 2014)",
+StyleDefinitions->Notebook[{
+   Cell[
+    StyleData[StyleDefinitions -> "Default.nb"]], 
+   Cell[
+    StyleData["Input"], InitializationCell -> True]}, Visible -> False, 
+  FrontEndVersion -> "10.0 for Linux x86 (64-bit) (September 9, 2014)", 
+  StyleDefinitions -> "PrivateStylesheetFormatting.nb"]
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 1395, 36, 185, "Code"],
+Cell[1956, 58, 8270, 188, 1592, "Input"]
+}
+]
+*)
+
+(* End of internal cache information *)
