@@ -39,7 +39,7 @@ ClearAll[IOCrawler];
 (* messages: *)
 IOCrawler::usage="ImportIO[call] calls an import.io API and returns the results in the form of an Association.";
 IOCrawler::badkeys=
-"The input call must be an Association object containing the following Keys: \"Type\", \"ID\", \"User\", \"APIKey\", \"URL\".";
+"The input call must be an Association object containing the following Keys: \"ID\", \"User\", \"APIKey\", \"URL\".";
 IOCrawler::httperror=
 "An error has occured: \"`1`\"";
 
